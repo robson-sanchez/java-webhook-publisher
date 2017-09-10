@@ -1,50 +1,65 @@
 package com.rvvsanchez.libs.event.publisher.webhook.core;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.rvvsanchez.libs.event.publisher.webhook.http.DefaultHttpConnector;
+import com.rvvsanchez.libs.event.publisher.webhook.http.HttpContentType;
+
+/**
+ * Class responsible for sending webhook events.
+ * 
+ * @author robson-sanchez
+ */
 public class WebhookSender {
 
-  private static final String USER_AGENT = "Webhook-Sender";
-
+  /**
+   * HTTP Connector
+   */
   private DefaultHttpConnector connector;
-
-  public static void main(String[] args) throws MalformedURLException, IOException {
-    DefaultHttpConnector connector = new DefaultHttpConnector(USER_AGENT);
-
-    WebhookSender sender = new WebhookSender(connector);
-
-    sender.sendJsonEvent("{ \"test\": 1234 }", new URL(args[0]));
-
-    sender.sendXmlEvent("<test>1234</test>", new URL(args[0]));
-
-    Map<String, String> content = new HashMap<>();
-    content.put("test", "1234");
-
-    sender.sendFormUrlEncoded(content, new URL(args[0]));
-  }
 
   public WebhookSender(DefaultHttpConnector connector) {
     this.connector = connector;
   }
 
-  public void sendJsonEvent(String body, URL destination) throws IOException {
-    connector.postJsonEvent(body, destination);
+  /**
+   * Post JSON event.
+   * 
+   * @param body JSON body
+   * @param destination Destination URL
+   * @return HTTP response code
+   * @throws IOException Reports failure during message sent.
+   */
+  public int sendJsonEvent(String body, String destination) throws IOException {
+    return connector.postEvent(body, HttpContentType.APPLICATION_JSON, destination);
   }
 
-  public void sendXmlEvent(String body, URL destination) throws IOException {
-    connector.postApplicationXMLEvent(body, destination);
+  /**
+   * Post XML event.
+   * 
+   * @param body XML body
+   * @param destination Destination URL
+   * @return HTTP response code
+   * @throws IOException Reports failure during message sent.
+   */
+  public int sendXmlEvent(String body, String destination) throws IOException {
+    return connector.postEvent(body, HttpContentType.APPLICATION_XML, destination);
   }
 
-  public void sendFormUrlEncoded(Map<String, String> body, URL destination) throws IOException {
+  /**
+   * Post form url-encodend event.
+   * 
+   * @param body Form content
+   * @param destination Destination URL
+   * @return HTTP response code
+   * @throws IOException Reports failure during message sent.
+   */
+  public int sendFormUrlEncoded(Map<String, String> body, String destination) throws IOException {
     String payload = body.entrySet().stream().map(map -> map.getKey() + "=" + map.getValue())
         .collect(Collectors.joining("&"));
 
-    connector.postFormUrlEncodedEvent(payload, destination);
+    return connector.postEvent(payload, HttpContentType.FORM_URL_ENCODED, destination);
   }
 
 }

@@ -3,7 +3,7 @@
   <groupId>com.rvvsanchez.libs.event.publisher</groupId>
   <artifactId>webhook-core</artifactId>
   <version>0.1.0-SNAPSHOT</version>
-  <name>Webhook Core </name>
+  <name>Webhook Library Core</name>
   
   <properties>
   	<maven.compiler.source>1.8</maven.compiler.source>

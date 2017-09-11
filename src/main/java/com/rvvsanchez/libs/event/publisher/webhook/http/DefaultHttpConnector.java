@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import com.rvvsanchez.libs.event.publisher.webhook.http.HttpRequest.HttpRequestBuilder;
+
 /**
  * Low-level HTTP connector
  * 
@@ -48,12 +50,23 @@ public class DefaultHttpConnector {
    */
   public int postEvent(String body, HttpContentType contentType, String destination) throws IOException {
     HttpHeader acceptHeader = new HttpHeader(ACCEPT, "*/*");
-    HttpHeader contentTypeHeader = new HttpHeader(CONTENT_TYPE, contentType.getValue());
-    HttpHeader contentLengthHeader = new HttpHeader(CONTENT_LENGTH, body.length());
-    HttpHeader userAgentHeader = new HttpHeader(USER_AGENT, userAgent);
     
-    HttpRequest request = HttpRequest.destination(destination).method(HttpMethod.POST).header(acceptHeader)
-        .header(contentTypeHeader).header(contentLengthHeader).header(userAgentHeader).body(body).build();
+    String typeValue = contentType == null ? HttpContentType.TEXT_PLAIN.getValue() : contentType.getValue();
+    HttpHeader contentTypeHeader = new HttpHeader(CONTENT_TYPE, typeValue);
+    
+    int contentLength = body == null ? 0 : body.length();
+    HttpHeader contentLengthHeader = new HttpHeader(CONTENT_LENGTH, contentLength);
+    
+    HttpHeader userAgentHeader = new HttpHeader(USER_AGENT, userAgent);
+
+    HttpRequestBuilder builder = HttpRequest.destination(destination).method(HttpMethod.POST).header(acceptHeader)
+        .header(contentTypeHeader).header(contentLengthHeader).header(userAgentHeader);
+
+    if (body != null) {
+      builder = builder.body(body);
+    }
+    
+    HttpRequest request = builder.build();
     
     return execute(request);
   }

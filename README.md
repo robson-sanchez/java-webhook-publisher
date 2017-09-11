@@ -1,2 +1,2 @@
 # java-webhook-publisher-core
-Java library to publish event using Webhook events
+Java library to publish events using webhooks

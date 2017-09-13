@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.rvvsanchez.libs.event.publisher.webhook.http.DefaultHttpConnector;
+import com.rvvsanchez.libs.event.publisher.webhook.http.HttpConnector;
 import com.rvvsanchez.libs.event.publisher.webhook.http.HttpContentType;
 
 /**
@@ -17,9 +17,9 @@ public class WebhookSender {
   /**
    * HTTP Connector
    */
-  private DefaultHttpConnector connector;
+  private HttpConnector connector;
 
-  public WebhookSender(DefaultHttpConnector connector) {
+  public WebhookSender(HttpConnector connector) {
     this.connector = connector;
   }
 

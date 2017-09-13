@@ -12,10 +12,16 @@
   
   <name>Webhook Library Core</name>
   <description>Java library to publish events using webhooks</description>
-  <url>https://github.com/robson-sanchez/java-webhook-publisher-core</url>
+  <url>https://github.com/robson-sanchez/java-webhook-publisher</url>
   <inceptionYear>2017</inceptionYear>
   
   <dependencies>
+  	<dependency>
+  		<groupId>com.rvvsanchez.libs.event.publisher</groupId>
+  		<artifactId>webhook-http</artifactId>
+  		<version>${project.version}</version>
+  	</dependency>
+  	
   	<dependency>
   		<groupId>junit</groupId>
   		<artifactId>junit</artifactId>

@@ -17,7 +17,7 @@ import com.rvvsanchez.libs.event.publisher.webhook.http.HttpRequest.HttpRequestB
  * 
  * @author robson-sanchez
  */
-public class DefaultHttpConnector {
+public class DefaultHttpConnector implements HttpConnector {
 
   /**
    * Default HTTP connection timeout (in miliseconds)
@@ -41,7 +41,7 @@ public class DefaultHttpConnector {
   }
 
   /**
-   * Post webhook event.
+   * Post webhook event using Java Standard library.
    * 
    * @param body Webhook payload
    * @param contentType Webhook content type

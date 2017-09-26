@@ -10,6 +10,11 @@ import java.io.IOException;
 public interface HttpConnector {
 
   /**
+   * Default HTTP connection timeout (in miliseconds)
+   */
+  Integer DEFAULT_TIMEOUT = 5000;
+  
+  /**
    * Post webhook event.
    * 
    * @param body Webhook payload

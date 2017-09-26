@@ -16,6 +16,8 @@ import org.junit.Test;
  */
 public class HttpRequestTest {
 
+  private static final String INVALID_DESTINATION = "mock://test^invalid";
+  
   private static final String MOCK_DESTINATION = "http://test.libs.com";
   
   private static final String MOCK_JSON = "{ \"foo\": 123 }";
@@ -32,7 +34,7 @@ public class HttpRequestTest {
   
   @Test(expected = MalformedURLException.class)
   public void testInvalidDestination() throws MalformedURLException {
-    HttpRequest.destination("?");
+    HttpRequest.destination(INVALID_DESTINATION);
   }
   
   @Test(expected = IllegalArgumentException.class)
@@ -65,7 +67,7 @@ public class HttpRequestTest {
     HttpRequest request = HttpRequest.destination(MOCK_DESTINATION).method(HttpMethod.HEAD).header(acceptHeader)
         .header(contentLengthHeader).body(MOCK_JSON).build();
     
-    assertEquals(MOCK_DESTINATION, request.getDestination().toExternalForm());
+    assertEquals(MOCK_DESTINATION, request.getDestination().toURL().toExternalForm());
     assertEquals(HttpMethod.HEAD, request.getMethod());
     assertEquals(MOCK_JSON, request.getBody());
     

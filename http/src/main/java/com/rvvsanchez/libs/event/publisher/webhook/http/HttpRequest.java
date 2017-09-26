@@ -1,7 +1,8 @@
 package com.rvvsanchez.libs.event.publisher.webhook.http;
 
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class HttpRequest {
 
   private String body;
   
-  private URL destination;
+  private URI destination;
   
   private HttpRequest() {
     this.headers = new ArrayList<>();
@@ -37,7 +38,7 @@ public class HttpRequest {
     return body;
   }
 
-  public URL getDestination() {
+  public URI getDestination() {
     return destination;
   }
 
@@ -107,8 +108,12 @@ public class HttpRequest {
         throw new IllegalArgumentException("Invalid destination URL");
       }
       
-      this.request.destination = new URL(destination);
-      return this;
+      try {
+        this.request.destination = new URI(destination);
+        return this;
+      } catch (URISyntaxException e) {
+        throw new MalformedURLException(e.getMessage());
+      }
     }
     
     public HttpRequest build() {

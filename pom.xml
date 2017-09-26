@@ -100,7 +100,6 @@
   					<format>xml</format>
   				</formats>
   				<check>
-  					<totalBranchRate>90</totalBranchRate>
   					<totalLineRate>90</totalLineRate>
   					<haltOnFailure>true</haltOnFailure>
   				</check>

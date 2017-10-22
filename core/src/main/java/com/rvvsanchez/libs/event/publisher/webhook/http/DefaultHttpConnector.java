@@ -12,8 +12,12 @@ import java.net.URL;
  */
 public class DefaultHttpConnector extends BaseHttpConnector {
 
+  public DefaultHttpConnector() {
+    super(DEFAULT_USER_AGENT);
+  }
+  
   public DefaultHttpConnector(String userAgent) {
-    super(userAgent, DEFAULT_TIMEOUT, DEFAULT_TIMEOUT);
+    super(userAgent);
   }
 
   public DefaultHttpConnector(String userAgent, int connectTimeout, int readTimeout) {

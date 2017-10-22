@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.entity.EntityBuilder;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -42,6 +44,9 @@ public class ApacheHttpConnector extends BaseHttpConnector {
   @Override
   protected int execute(HttpRequest request) throws IOException {
     HttpPost post = new HttpPost(request.getDestination());
+    
+    HttpEntity entity = EntityBuilder.create().setText(request.getBody()).build();
+    post.setEntity(entity);
 
     // Request headers
     List<String> unsupported = unsupportedHeaders();

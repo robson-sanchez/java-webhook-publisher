@@ -10,6 +10,11 @@ import java.io.IOException;
 public interface HttpConnector {
 
   /**
+   * Default User Agent
+   */
+  String DEFAULT_USER_AGENT = "Webhook Publisher";
+  
+  /**
    * Default HTTP connection timeout (in miliseconds)
    */
   Integer DEFAULT_TIMEOUT = 5000;
